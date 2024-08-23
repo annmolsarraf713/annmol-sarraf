@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<h<tml lang="en">
+<head>
+
+<title>Quiz</title>
+<link rel="stylesheet" href ="a.css">
+<style>
+h1 {
+  text-align: center;
+}
+.question {
+  margin-bottom: 20px;
+}
+.options 
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1> Quiz</h1>
+  <div class="question" id="question"></div>
+  <ul class="options" id="options"></ul>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+const quizData = [
+  {
+    question: "What is the capital of France?",
+    options: ["Paris", "London", "Berlin", "Rome"],
+    answer: "Paris"
+  },
+  {
+    question: "What is 4 + 4?",
+    options: ["8", "10", "6", "12"],
+    answer: "8"
+  },
+  {
+    question: "What is the largest ocean in the world?",
+    options: ["atlantic ocean", "indian ocean", "Arctic ocean", "pacific ocean"],
+    answer: "pacific ocean"
+  },
+  {
+    question: "Which planet is known as red planet",
+    options: ["venus", "mars", "jupiter", "saturn"],
+    answer: "mars"
+  },
+  {
+    question: "What is the currency of japan?",
+    options: ["rupee", "dollar", "euro", "yen"],
+    answer: "yen"
+  },
+
+  {
+    question: "What is the largest planet in our solar system?",
+    options: ["Earth", "Mars", "Jupiter", "Saturn"],
+    answer: "Jupiter"
+  }
+];
+const questionElement = document.getElementById("question");
+const optionsElement = document.getElementById("options");
+const resultElement = document.getElementById("result");
+let currentQuestion = 0;
+let score = 0;
+function showQuestion() {
+  const currentQuizData = quizData[currentQuestion];
+  questionElement.textContent = currentQuizData.question;
+  optionsElement.innerHTML = "";
+  currentQuizData.options.forEach(option => {
+    const li = document.createElement("li");
+    li.textContent = option;
+    li.addEventListener("click", () => {
+      if (option === currentQuizData.answer) {
+        score++;
+        resultElement.textContent = "Correct!";
+      } else {
+        resultElement.textContent = "Wrong!";
+      }
+      setTimeout(() => {
+        resultElement.textContent = "";
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+          showQuestion();
+        } else {
+          showResult();
+        }
+      }, 1000);
+    });
+    optionsElement.appendChild(li);
+  });
+}
+function showResult() {
+  questionElement.textContent = "";
+  optionsElement.innerHTML = "";
+  resultElement.textContent = `You scored ${score} out of ${quizData.length}`;
+}
+
+showQuestion();
+</script>
+</body>
+</html>
